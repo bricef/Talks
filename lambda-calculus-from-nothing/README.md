@@ -1,0 +1,29 @@
+# In the beginning there was the function
+
+A ~15-minute live-coded talk introducing programmers to **lambda calculus** and
+**functional programming** by building booleans, numbers, and arithmetic from
+nothing but one-argument functions.
+
+No slides. Just a REPL and the claim that a single construct — the function — is
+enough to express all of computation.
+
+## Files
+- **`demo.ts`** — the full demo, sectioned by act, with expected outputs inline.
+  Your safety net and oracle; present by typing it live.
+- **`CUE-CARD.md`** — one-page presenter card: timings, patter, escape hatches.
+
+## Run it
+```sh
+npx tsx demo.ts      # or: deno run demo.ts
+```
+
+The code is deliberately untyped — plain arrow functions, so it reads as clean
+lambda calculus and runs as-is. If presenting from a `.ts` file under strict
+settings, set `"noImplicitAny": false` or just use the
+[TypeScript Playground](https://www.typescriptlang.org/play).
+
+## The arc
+1. **The only rule** — one argument per function; currying is the whole structure.
+2. **Booleans from nothing** — `TRUE`/`FALSE` as a choice; `if` is just calling it.
+3. **Numbers from nothing** — Church numerals; a number is repetition. `MULT` is `compose`.
+4. **It was FP all along** — map/filter/reduce, composition, immutability.

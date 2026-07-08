@@ -11,7 +11,7 @@
 | 5:15–8:15 | **3 · Numbers** | `ZERO`→`THREE`, `toInt`, `SUCC`, `ADD`, `MULT` | A number is *how many times you do something*. Reveal: "I never defined `5`." Kicker: **multiplication is compose**. |
 | 8:15–10:45 | **4 · Logic & decisions** | `ISZERO`, `PRED`, `SUB`, `LEQ`, `EQ` | Booleans meet numbers. A *predicate* turns a number back into a yes/no. Reuse `IF`/`AND` — no new keywords. `IF(LEQ …)` is a real decision. |
 | 10:45–13:00 | **5 · Completing the logic** † | `NOT`, `OR`, `classify` | Round out the booleans. `cond` isn't a new primitive — it's `IF` nested in `IF`. `classify` shows a real multi-way branch. |
-| 13:00–16:30 | **6 · Pairs & lists** † | `PAIR`, `FIRST`, `REST`, `NIL`, `ISEMPTY` | Data from nothing. A pair hands its two values to a selector *you* choose — and the selectors are our booleans. Lists = pairs nested right. **Payoff: we've now rebuilt all 9 primitives the *Building Objects* talk assumes.** |
+| 13:00–16:30 | **6 · Pairs & lists** † | `PAIR`, `FIRST`, `REST`, `NIL`, `ISEMPTY`, `LIST` | Data from nothing. A pair hands its two values to a selector *you* choose — and the selectors are our booleans. `LIST(1,2,3)` is just pairs nested right. **Payoff: we've now rebuilt all 9 primitives the *Building Objects* talk assumes.** |
 | 16:30–18:15 | **7 · It was FP** | `compose`, `.map` | Name what they saw: functions-as-values, no mutation, composition over control flow. `MULT` *was* `compose`. |
 | 18:15–20:00 | **Close** | *(mic down)* | Church, 1930s, before computers. Every FP feature in TS is clothing over what they just watched. |
 

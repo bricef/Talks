@@ -33,7 +33,7 @@ settings, set `"noImplicitAny": false` or just use the
 3. **Numbers from nothing** — Church numerals; a number is repetition. `MULT` is `compose`.
 4. **Logic & decisions** — `ISZERO`/`LEQ`/`EQ`; a predicate turns a number back into a boolean, and `IF`/`AND` make a real decision.
 5. **Completing the logic** † — `NOT`/`OR`; `cond` is just nested `IF`.
-6. **Pairs & lists** † — `PAIR`/`FIRST`/`REST`/`NIL`; data from nothing, selectors are booleans. Rebuilds the exact 9-primitive core the *Building Objects* talk assumes (see `BRIDGE.md`).
+6. **Pairs & lists** † — `PAIR`/`FIRST`/`REST`/`NIL`/`LIST`; data from nothing, selectors are booleans. Rebuilds the exact 9-primitive core the *Building Objects* talk assumes (see `BRIDGE.md`).
 7. **It was FP all along** — map/filter/reduce, composition, immutability.
 
 Acts 5–6 (†) are *Part II — the bridge to Building Objects with Functions*; drop

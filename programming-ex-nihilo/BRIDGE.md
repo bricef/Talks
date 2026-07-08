@@ -5,8 +5,11 @@ nothing but the function. The [*Building Objects with Functions*][talk] talk
 ([source][repo]) builds an object system — but it **starts one floor up**, on a
 list of 12 "primitives" it declares it will rely on:
 
-> `first`/`car` · `rest`/`cdr` · `list` · `cons` · `equal` · `cond` · `or` ·
+> `first` · `rest` · `list` · `pair` · `equal` · `cond` · `or` ·
 > `and` · `not` · `setq` · `defun` · `defmacro`
+
+*(The talk uses the traditional Lisp names for the list cell: `pair` is its
+`cons`, and `first`/`rest` are its `car`/`cdr`.)*
 
 The claim of this note: **those aren't bedrock.** Every one that carries *meaning*
 is a composition of what we already built here — and the join point is Act 4.
@@ -19,7 +22,7 @@ is a composition of what we already built here — and the join point is Act 4.
 | | `or`, `not` | one-liners over our `TRUE`/`FALSE` (Act 2) |
 | | `cond` | nested / folded `IF` (Act 2) |
 | | `equal` | our `EQ` (Act 4) — full chain below |
-| | `cons`, `car`, `cdr`, `list` | the Church pair — already latent in `PRED` |
+| | `pair`, `first`, `rest`, `list` | the Church pair — already latent in `PRED` |
 | **Outside the box** (3) | `setq`, `defun` | naming & persistence — substitution, not a value |
 | | `defmacro` | pure syntactic sugar — doesn't change semantics |
 
@@ -52,24 +55,24 @@ lambda-native — but encode a key as a numeral and it is exactly our `EQ`.)*
 
 ## Thread 2 — data cells (and the prettiest bridge)
 
-`cons`/`car`/`cdr`/`list` are the Church pair — pure functions, with our booleans
-acting as the selectors:
+`pair`/`first`/`rest`/`list` are the Church pair — pure functions, with our
+booleans acting as the selectors:
 
 ```
-cons ≡ a → b → s → s a b
-car  ≡ p → p(TRUE)        cdr ≡ p → p(FALSE)        ← selectors ARE our booleans
-list ≡ repeated cons over NIL
+pair  ≡ a → b → s → s a b
+first ≡ p → p(TRUE)        rest ≡ p → p(FALSE)       ← selectors ARE our booleans
+list  ≡ repeated pair over NIL
 ```
 
 And we already wrote this shape. Look at `PRED`'s accumulator box:
 
 ```
-h => h(value)          -- a value waiting for a selector = a one-slot cons cell
+h => h(value)          -- a value waiting for a selector = a one-slot pair cell
 ```
 
-That "value waiting for a selector" *is* the cons trick. The machinery the objects
+That "value waiting for a selector" *is* the pair trick. The machinery the objects
 talk uses to hold a `(key value)` field is the same machinery our predecessor uses
-to hold "the previous number." **The box inside `PRED` is a cons cell.** (See
+to hold "the previous number." **The box inside `PRED` is a pair cell.** (See
 [`APPENDIX-PRED.md`](APPENDIX-PRED.md) for the full reduction.)
 
 ## The payoff

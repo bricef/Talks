@@ -15,6 +15,8 @@ enough to express all of computation.
   lambda worth explaining slowly.
 - **`APPENDIX-FOLDR.md`** — what `reduceRight` (`foldr`) looks like with nothing
   but functions; two encodings, and why Church numerals were folds all along.
+- **`APPENDIX-Y.md`** — the Y combinator: how to get recursion (e.g. factorial)
+  when a `λ` has no name to call itself by, and the eager-host `Z` variant.
 - **`BRIDGE.md`** — how this demo stacks under the *Building Objects with
   Functions* talk: 9 of its 12 "primitives" are compositions built here, joined
   at Act 4 (`equal`/`cond` → `get-in`).

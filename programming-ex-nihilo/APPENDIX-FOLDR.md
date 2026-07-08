@@ -33,7 +33,7 @@ foldr f z l  =  IF (ISEMPTY l)  z  (f (FIRST l) (foldr f z (REST l)))
 ```
 
 To make `foldr` refer to itself with no name to bind it, use a **fixed-point
-combinator** `Y`:
+combinator** `Y` (where it comes from and why it works: [`APPENDIX-Y.md`](APPENDIX-Y.md)):
 
 ```
 Y     ≡ λf. (λx. f (x x)) (λx. f (x x))
@@ -122,4 +122,5 @@ waiting for the function you hand them.**
 
 *Both encodings above are verified end-to-end (`foldr ADD ZERO [1,2,3] = 6`,
 `= 0` on empty, and the numeral connection). See also
-[`APPENDIX-PRED.md`](APPENDIX-PRED.md) and [`BRIDGE.md`](BRIDGE.md).*
+[`APPENDIX-Y.md`](APPENDIX-Y.md) (the `Y`/`Z` combinator used in Answer A),
+[`APPENDIX-PRED.md`](APPENDIX-PRED.md), and [`BRIDGE.md`](BRIDGE.md).*

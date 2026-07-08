@@ -92,12 +92,60 @@ console.log(show(EQ(TWO)(THREE)));           // no   — 2 != 3
 console.log(IF(LEQ(TWO)(THREE))("smaller")("bigger")); // smaller — a real decision
 console.log();
 
-// ── Act 5 ─ Land it: this is functional programming ──────────────────────────
+// ── Act 5 ─ Completing the logic ─────────────────────────────────────────────
+// We already have AND (Act 2). Round out the boolean toolkit — and note that
+// multi-way `cond` is not a new primitive: it's just IF nested inside IF.
+
+const NOT = b => b(FALSE)(TRUE);       // swap the two choices
+const OR  = p => q => p(p)(q);         // if p, we're done; otherwise it's q
+
+// cond ≡ nested IF:  (cond (t1 a) (t2 b) (else c))  ==  IF t1 a (IF t2 b c)
+// (Branches here are plain values; for a *recursive* cond you'd thunk them,
+//  because our host — JS — is eager where real Lisp is lazy in the branches.)
+const classify = n =>
+  IF (ISZERO(n))       ("zero")
+     (IF (LEQ(n)(TWO)) ("small")
+                       ("big"));
+
+console.log("Act 5 — completing the logic");
+console.log(show(NOT(TRUE)));                // no
+console.log(show(OR(FALSE)(TRUE)));          // yes
+console.log(classify(ZERO), classify(TWO), classify(THREE)); // zero small big
+console.log();
+
+// ── Act 6 ─ Pairs & lists ────────────────────────────────────────────────────
+// Data from nothing. A pair holds two things and hands them to a selector YOU
+// choose — and the selectors are just our booleans. Lists are pairs nested right.
+
+const PAIR  = a => b => s => s(a)(b);
+const FIRST = p => p(TRUE);            // TRUE picks the first  (Lisp's car)
+const REST  = p => p(FALSE);           // FALSE picks the second (Lisp's cdr)
+
+const NIL     = s => TRUE;             // the empty list: answers TRUE to any probe
+const ISEMPTY = l => l(a => b => FALSE); // a pair answers FALSE; only NIL says TRUE
+
+// a list is just PAIRs ending in NIL:  ~[1, 2, 3]
+const nums = PAIR(ONE)(PAIR(TWO)(PAIR(THREE)(NIL)));
+
+console.log("Act 6 — pairs & lists");
+console.log(toInt(FIRST(nums)));                    // 1
+console.log(toInt(FIRST(REST(nums))));              // 2
+console.log(toInt(FIRST(REST(REST(nums)))));        // 3
+console.log(show(ISEMPTY(nums)));                   // no
+console.log(show(ISEMPTY(REST(REST(REST(nums)))))); // yes
+console.log();
+
+// We just rebuilt a foundation:  AND · OR · NOT · cond · pair · first · rest ·
+// list · equal (EQ) — the exact 9-primitive semantic core that the "Building
+// Objects with Functions" talk *assumes* as bedrock. We built it from the
+// function. That's the join between the two talks — see BRIDGE.md.
+
+// ── Act 7 ─ Land it: this is functional programming ──────────────────────────
 // Everything above, in idiomatic TS. MULT was literally compose. map/filter/
 // reduce are functions-as-values. No statements, only expressions.
 
 const compose = (g, f) => a => g(f(a));
 
-console.log("Act 5 — it was FP all along");
+console.log("Act 7 — it was FP all along");
 console.log([1, 2, 3].map(x => x * 2));      // [ 2, 4, 6 ]
 console.log(compose(x => x + 1, x => x * 2)(10)); // 21

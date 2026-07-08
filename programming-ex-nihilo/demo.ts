@@ -65,12 +65,38 @@ console.log(toInt(ADD(TWO)(THREE)));         // 5  — I never defined FIVE
 console.log(toInt(MULT(TWO)(THREE)));        // 6  — multiplication IS compose
 console.log();
 
-// ── Act 4 ─ Land it: this is functional programming ──────────────────────────
+// ── Act 4 ─ Logic & decisions ────────────────────────────────────────────────
+// Booleans (Act 2) meet numbers (Act 3). A *predicate* turns a number back into
+// a boolean, and IF / AND — already ours — let us actually decide. No new keywords.
+
+// ISZERO: apply "always FALSE" n times to TRUE. Zero times → it stays TRUE.
+// This is the bridge: it's how a number becomes a yes/no answer.
+const ISZERO = n => n(_ => FALSE)(TRUE);
+
+// PRED — subtract one. The one genuinely gnarly lambda in the whole talk.
+// Don't stare at it: it rebuilds n step by step and hands back the previous step.
+const PRED = n => f => x => n(g => h => h(g(f)))(u => x)(u => u);
+
+// With PRED, subtraction is just "apply PRED n times" — and comparison falls out.
+const SUB = m => n => n(PRED)(m);                 // truncated m - n (never below 0)
+const LEQ = m => n => ISZERO(SUB(m)(n));          // m <= n  ?
+const EQ  = m => n => AND(LEQ(m)(n))(LEQ(n)(m));  // m <= n AND n <= m
+
+console.log("Act 4 — logic & decisions");
+console.log(show(ISZERO(ZERO)));             // yes
+console.log(show(ISZERO(THREE)));            // no
+console.log(show(LEQ(TWO)(THREE)));          // yes  — 2 <= 3
+console.log(show(EQ(THREE)(THREE)));         // yes  — 3 == 3
+console.log(show(EQ(TWO)(THREE)));           // no   — 2 != 3
+console.log(IF(LEQ(TWO)(THREE))("smaller")("bigger")); // smaller — a real decision
+console.log();
+
+// ── Act 5 ─ Land it: this is functional programming ──────────────────────────
 // Everything above, in idiomatic TS. MULT was literally compose. map/filter/
 // reduce are functions-as-values. No statements, only expressions.
 
 const compose = (g, f) => a => g(f(a));
 
-console.log("Act 4 — it was FP all along");
+console.log("Act 5 — it was FP all along");
 console.log([1, 2, 3].map(x => x * 2));      // [ 2, 4, 6 ]
 console.log(compose(x => x + 1, x => x * 2)(10)); // 21

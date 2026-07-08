@@ -26,4 +26,5 @@ settings, set `"noImplicitAny": false` or just use the
 1. **The only rule** — one argument per function; currying is the whole structure.
 2. **Booleans from nothing** — `TRUE`/`FALSE` as a choice; `if` is just calling it.
 3. **Numbers from nothing** — Church numerals; a number is repetition. `MULT` is `compose`.
-4. **It was FP all along** — map/filter/reduce, composition, immutability.
+4. **Logic & decisions** — `ISZERO`/`LEQ`/`EQ`; a predicate turns a number back into a boolean, and `IF`/`AND` make a real decision.
+5. **It was FP all along** — map/filter/reduce, composition, immutability.

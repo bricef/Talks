@@ -11,6 +11,8 @@ enough to express all of computation.
 - **`demo.ts`** — the full demo, sectioned by act, with expected outputs inline.
   Your safety net and oracle; present by typing it live.
 - **`CUE-CARD.md`** — one-page presenter card: timings, patter, escape hatches.
+- **`APPENDIX-PRED.md`** — deep-dive on the Church predecessor (`PRED`), the one
+  lambda worth explaining slowly.
 
 ## Run it
 ```sh

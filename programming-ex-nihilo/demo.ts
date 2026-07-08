@@ -75,6 +75,7 @@ const ISZERO = n => n(_ => FALSE)(TRUE);
 
 // PRED — subtract one. The one genuinely gnarly lambda in the whole talk.
 // Don't stare at it: it rebuilds n step by step and hands back the previous step.
+// Full breakdown in APPENDIX-PRED.md.
 const PRED = n => f => x => n(g => h => h(g(f)))(u => x)(u => u);
 
 // With PRED, subtraction is just "apply PRED n times" — and comparison falls out.

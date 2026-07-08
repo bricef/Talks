@@ -41,7 +41,80 @@ Key move: `init` **swallows** the `f` handed to it on the first `B` step. Every
 step after that applies a real `f`. So after `n` steps you've applied `f` only
 `n − 1` times. That's the predecessor.
 
-## Trace it (this is the actual reduction)
+## Step-by-step β-reduction of `PRED THREE`
+
+The rigorous version: nothing but substitution, one redex at a time, until we
+land on `TWO`. We α-rename `THREE`'s bound variables to `s`/`z` so they can't be
+confused with the `f`/`x` introduced by `PRED`, and abbreviate the two constant
+sub-terms once they appear:
+
+```
+PRED  ≡ λn. λf. λx. n (λg. λh. h (g f)) (λu. x) (λu. u)
+THREE ≡ λs. λz. s (s (s z))
+
+B ≡ λg. λh. h (g f)      -- "advance": open box g with f, re-wrap the result
+K ≡ λu. x                -- the seed: ignores its argument, yields x
+I ≡ λu. u                -- identity: used at the end to read the box out
+```
+
+**Feed `THREE` to `PRED`** (substitute `n := THREE`), then work inside the
+`λf. λx.` — at which point `B`, `K`, `I` are exactly the terms above:
+
+```
+   PRED THREE
+=  (λn. λf. λx. n (λg.λh. h (g f)) (λu.x) (λu.u)) THREE
+→β λf. λx. THREE (λg.λh. h (g f)) (λu.x) (λu.u)
+≡  λf. λx. THREE B K I
+```
+
+**Apply `THREE` to `B`** — a numeral applied to a function just means "do it
+three times", so `THREE B` becomes `B∘B∘B`, then hand it the seed `K`:
+
+```
+   THREE B
+=  (λs. λz. s (s (s z))) B
+→β λz. B (B (B z))
+   (THREE B) K
+→β B (B (B K))
+```
+
+**Reduce the tower inside-out.** Each `B` opens the box below it with `f` and
+re-wraps — and the *first* one hits the seed `K`, which throws `f` away. Write
+`Pₖ` for each resulting box:
+
+```
+(1)  B K   = (λg.λh. h (g f)) K   →β λh. h (K f)
+     K f   = (λu.x) f             →β x            ← the swallow: f discarded
+     ⟹ B K →β λh. h x                              ≡ P₁
+
+(2)  B P₁  = (λg.λh. h (g f)) P₁  →β λh. h (P₁ f)
+     P₁ f  = (λh. h x) f          →β f x           ← first real application
+     ⟹ B P₁ →β λh. h (f x)                          ≡ P₂
+
+(3)  B P₂  = (λg.λh. h (g f)) P₂  →β λh. h (P₂ f)
+     P₂ f  = (λh. h (f x)) f      →β f (f x)        ← second real application
+     ⟹ B P₂ →β λh. h (f (f x))                      ≡ P₃
+```
+
+**Read the box out** by applying the identity `I`:
+
+```
+   P₃ I = (λh. h (f (f x))) I
+→β I (f (f x)) = (λu.u) (f (f x))
+→β f (f x)
+```
+
+**Put the `λf. λx.` back on:**
+
+```
+PRED THREE →β λf. λx. f (f x)  ≡  TWO   ∎
+```
+
+Three `B`-steps, but only **two** real applications of `f` — because step (1)
+fed `f` into the seed `K`, which discarded it. That single swallowed `f` *is* the
+subtraction. Everything else is honest counting.
+
+## Confirm it by running (instrumented)
 
 Watch what value the box holds after each `B`, opening it with `id` to peek.
 Written with `f` shown as `·f` so you can count the applications:

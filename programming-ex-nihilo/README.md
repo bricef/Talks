@@ -13,6 +13,8 @@ enough to express all of computation.
 - **`CUE-CARD.md`** — one-page presenter card: timings, patter, escape hatches.
 - **`APPENDIX-PRED.md`** — deep-dive on the Church predecessor (`PRED`), the one
   lambda worth explaining slowly.
+- **`APPENDIX-FOLDR.md`** — what `reduceRight` (`foldr`) looks like with nothing
+  but functions; two encodings, and why Church numerals were folds all along.
 - **`BRIDGE.md`** — how this demo stacks under the *Building Objects with
   Functions* talk: 9 of its 12 "primitives" are compositions built here, joined
   at Act 4 (`equal`/`cond` → `get-in`).

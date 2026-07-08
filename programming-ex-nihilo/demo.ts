@@ -126,7 +126,8 @@ const ISEMPTY = l => l(a => b => FALSE); // a pair answers FALSE; only NIL says 
 
 // A list is just PAIRs ending in NIL:  LIST(1,2,3) is PAIR(1)(PAIR(2)(PAIR(3)(NIL))).
 // LIST folds PAIR over NIL from the right — the list is pure pairs; only the
-// variadic (…xs) is host sugar, same category as toInt.
+// variadic (…xs) is host sugar, same category as toInt. (What reduceRight itself
+// looks like with nothing but functions: APPENDIX-FOLDR.md.)
 const LIST = (...xs) => xs.reduceRight((rest, x) => PAIR(x)(rest), NIL);
 const nums = LIST(ONE, TWO, THREE);
 
